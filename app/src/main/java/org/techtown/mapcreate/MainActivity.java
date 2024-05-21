@@ -1,11 +1,14 @@
 package org.techtown.mapcreate;
 
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -47,16 +50,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        
+
         database = FirebaseDatabase.getInstance(); // 변수 안에 FirebaseDatabase 연동
         databaseReference = database.getReference("Path");
-        
+
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // FirebaseDatabase의 데이터를 받아오는 곳
                 arrayList.clear();
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()) { // 반복문으로 데이터 List를 추출
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) { // 반복문으로 데이터 List를 추출
                     Database gasInfo = snapshot.getValue(Database.class); // GasInfo 클래스에 데이터를 저장해줄 변수 선언
                     arrayList.add(gasInfo); // 데이터를 배열리스트(Arraylist)에 넣음
                 }
@@ -80,12 +83,26 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
 
-
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        googleMap.setMyLocationEnabled(true);
+        LatLng location = null;
         for (int i=0; i<arrayList.size(); i++) {
-            LatLng location = new LatLng(arrayList.get(i).getLat(), arrayList.get(i).getLng());
-            googleMap.addMarker(new MarkerOptions().position(location).title(arrayList.get(i).getGasStation()));
+            try {
+                location = new LatLng(arrayList.get(i).getLat(), arrayList.get(i).getLng());
+                googleMap.addMarker(new MarkerOptions().position(location).title(arrayList.get(i).getGasStation()));
+            } catch (Exception e) {}
+
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 12));
             // CameraUpdate를 사용해 카메라 이동할 위치 지정 (즉, 카메라 위치 변경)
             // CameraUpdateFactory를 사용해, 여러 유형의 CameraUpdate 만들 수 있다.
