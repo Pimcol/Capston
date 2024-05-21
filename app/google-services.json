@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "356092355001",
+    "project_id": "mapcreate-f9207",
+    "storage_bucket": "mapcreate-f9207.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:356092355001:android:b3d215319994ab56189668",
+        "android_client_info": {
+          "package_name": "org.techtown.mapcreate"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNOuKHFudE1eIMDgmEcCxiF7GBJRu02Mg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
