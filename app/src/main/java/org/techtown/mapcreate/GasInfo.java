@@ -4,8 +4,8 @@ public class GasInfo {
     private String Gas;
     private String GasStation;
     private String address;
-    private int Lat;
-    private int Lng;
+    private double Lat;
+    private double Lng;
     private int gasoline;
     private int diesel;
 
@@ -35,7 +35,7 @@ public class GasInfo {
         this.address = address;
     }
 
-    public int getLat() {
+    public double getLat() {
         return Lat;
     }
 
@@ -43,7 +43,7 @@ public class GasInfo {
         Lat = lat;
     }
 
-    public int getLng() {
+    public double getLng() {
         return Lng;
     }
 

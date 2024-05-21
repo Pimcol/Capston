@@ -3,8 +3,8 @@ package org.techtown.mapcreate;
 public class Database {
     public String Gas;
     public String GasStation;
-    public int Lat;
-    public int Lng;
+    public double Lat;
+    public double Lng;
     public String address;
     public int diesel;
     public int gasoilne;
@@ -29,7 +29,7 @@ public class Database {
         GasStation = gasStation;
     }
 
-    public int getLat() {
+    public double getLat() {
         return Lat;
     }
 
@@ -37,7 +37,7 @@ public class Database {
         Lat = lat;
     }
 
-    public int getLng() {
+    public double getLng() {
         return Lng;
     }
 
