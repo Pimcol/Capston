@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
+    /*
         database = FirebaseDatabase.getInstance(); // 변수 안에 FirebaseDatabase 연동
         databaseReference = database.getReference("Path");
 
@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
         adapter = new CustomAdapter(arrayList, this);
         recyclerView.setAdapter(adapter); // 리사이클러뷰에 어뎁터 연결
+    */
 
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.id_map);
@@ -85,27 +86,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        googleMap.setMyLocationEnabled(true);
-        LatLng location = null;
-        for (int i=0; i<arrayList.size(); i++) {
-            try {
-                location = new LatLng(arrayList.get(i).getLat(), arrayList.get(i).getLng());
-                googleMap.addMarker(new MarkerOptions().position(location).title(arrayList.get(i).getGasStation()));
-            } catch (Exception e) {}
+        //googleMap.setMyLocationEnabled(true);
+        // LatLng location = null;
+        LatLng location = new LatLng(37.770662, 128.875573);
+        googleMap.addMarker(new MarkerOptions().position(location).title("GS칼텍스 GS교동택지주유소"));
 
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 12));
-            // CameraUpdate를 사용해 카메라 이동할 위치 지정 (즉, 카메라 위치 변경)
-            // CameraUpdateFactory를 사용해, 여러 유형의 CameraUpdate 만들 수 있다.
-        }
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 12));
+        // CameraUpdate를 사용해 카메라 이동할 위치 지정 (즉, 카메라 위치 변경)
+        // CameraUpdateFactory를 사용해, 여러 유형의 CameraUpdate 만들 수 있다.
     }
 }
